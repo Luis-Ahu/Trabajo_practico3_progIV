@@ -1,0 +1,55 @@
+@url=http://localhost:3000
+
+### Crear usuario
+POST {{url}}/usuarios
+Content-Type: application/json
+
+{
+  "nombre": "Juan Pérez",
+  "email": "juan@mail.com",
+  "contraseña": "password123"
+}
+
+### Crear con email repetido (debe dar 400)
+POST {{url}}/usuarios
+Content-Type: application/json
+
+{
+  "nombre": "Juan Pérez",
+  "email": "juan@mail.com",
+  "contraseña": "password123"
+}
+
+### Crear con contraseña débil (debe dar 400)
+POST {{url}}/usuarios
+Content-Type: application/json
+
+{
+  "nombre": "Ana",
+  "email": "ana@mail.com",
+  "contraseña": "abc"
+}
+
+### Listar usuarios
+GET {{url}}/usuarios
+
+### Obtener usuario por ID
+GET {{url}}/usuarios/1
+
+### Obtener usuario inexistente (debe dar 404)
+GET {{url}}/usuarios/9999
+
+### Obtener con ID inválido (debe dar 400)
+GET {{url}}/usuarios/abc
+
+### Modificar usuario (la contraseña es opcional)
+PUT {{url}}/usuarios/1
+Content-Type: application/json
+
+{
+  "nombre": "Juan Carlos Pérez",
+  "email": "juan@mail.com"
+}
+
+### Eliminar usuario
+DELETE {{url}}/usuarios/1
