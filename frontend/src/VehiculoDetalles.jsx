@@ -127,11 +127,15 @@ export function VehiculoDetalles() {
           {errorServidor && <p style={{ color: "red" }}>{errorServidor}</p>}
 
           <div>
-            <button type="submit">Guardar</button>
-            <button type="button" onClick={() => setEditando(false)}>
-              Cancelar
-            </button>
-          </div>
+            <button onClick={empezarEdicion}>Modificar</button>
+            <button onClick={eliminar}>Eliminar</button>
+            <Link to={`/viajes?vehiculo_id=${vehiculo.id}`}>
+              <button>Ver viajes y kilómetros</button>
+            </Link>
+            <Link to="/vehiculos">
+              <button>Volver</button>
+            </Link>
+        </div>
         </form>
       </>
     );

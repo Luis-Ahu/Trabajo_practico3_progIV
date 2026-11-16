@@ -1,12 +1,16 @@
 import { useCallback, useEffect, useState } from "react";
-import { Link } from "react-router";
+import { Link, useSearchParams } from "react-router";
 import { useAuth } from "./Auth";
 import { ViajesFiltros } from "./ViajesFiltros";
 
 export function Viajes() {
   const [viajes, setViajes] = useState([]);
   const [totalKm, setTotalKm] = useState(0);
-  const [filtros, setFiltros] = useState({ vehiculoId: 0, conductorId: 0 });
+  const [searchParams] = useSearchParams();
+  const [filtros, setFiltros] = useState({
+  vehiculoId: Number(searchParams.get("vehiculo_id")) || 0,
+  conductorId: Number(searchParams.get("conductor_id")) || 0,
+  }); 
   const { fetchAuth } = useAuth();
 
   const armarQuery = useCallback(() => {

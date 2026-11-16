@@ -165,9 +165,12 @@ export function ConductorDetalles() {
 
       {errorServidor && <p style={{ color: "red" }}>{errorServidor}</p>}
 
-      <div>
+       <div>
         <button onClick={empezarEdicion}>Modificar</button>
         <button onClick={eliminar}>Eliminar</button>
+        <Link to={`/viajes?conductor_id=${conductor.id}`}>
+          <button>Ver viajes y kilómetros</button>
+        </Link>
         <Link to="/conductores">
           <button>Volver</button>
         </Link>
