@@ -1,6 +1,8 @@
 import express from "express";
 import { conectarDB } from "./db.js";
 import usuariosRouter from "./usuarios.js";
+import authRouter, { authConfig, authMiddleware } from "./auth.js";
+
 
 conectarDB();
 
@@ -9,13 +11,15 @@ const port = 3000;
 
 app.use(express.json());
 
+authConfig();
+
 
 app.get("/", (req, res) => {
     res.send("hola mundo");
 });
 
-
-app.use("/usuarios", usuariosRouter);
+app.use("/auth", authRouter);
+app.use("/usuarios", authMiddleware, usuariosRouter);
 
 
 app.listen(port, () => {

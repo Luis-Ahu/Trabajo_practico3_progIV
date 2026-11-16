@@ -3,7 +3,6 @@ import bcrypt from "bcrypt";
 import { db } from "./db.js";
 import {
     validarId,
-    validarRegistro,
     validarUsuarioEdicion,
     verificarValidaciones,
 } from "./validaciones.js";
@@ -33,26 +32,14 @@ router.get("/:id", validarId, verificarValidaciones, async (req, res) => {
 });
 
 
-router.post("/", validarRegistro, verificarValidaciones, async (req, res) => {
-    const { nombre, email, contraseña } = req.body;
-
-    const [existe] = await db.execute("SELECT id FROM usuarios WHERE email=?", [email]);
-    if (existe.length > 0) {
-        return res.status(400).send("El email ya está registrado");
-    }
-
-    const hashedPassword = await bcrypt.hash(contraseña, 12);
-
-    const [result] = await db.execute(
-        "INSERT INTO usuarios (nombre, email, `contraseña`) VALUES (?, ?, ?)",
-        [nombre, email, hashedPassword]
-    );
-
-    res.status(201).json({ id: result.insertId, nombre, email });
-});
 
 router.put("/:id", validarId, validarUsuarioEdicion, verificarValidaciones, async (req, res) => {
     const id = Number(req.params.id);
+
+    if (req.user.userId !== id) {
+        return res.status(403).send("No podés modificar a otro usuario");
+    }
+
     const { nombre, email, contraseña } = req.body;
 
     try {
@@ -85,6 +72,10 @@ router.put("/:id", validarId, validarUsuarioEdicion, verificarValidaciones, asyn
 
 router.delete("/:id", validarId, verificarValidaciones, async (req, res) => {
     const id = Number(req.params.id);
+
+    if (req.user.userId !== id) {
+        return res.status(403).send("No podés eliminar a otro usuario");
+    }
 
     const [result] = await db.execute("DELETE FROM usuarios WHERE id=?", [id]);
 

@@ -1,49 +1,28 @@
 @url=http://localhost:3000
-
-### Crear usuario
-POST {{url}}/usuarios
-Content-Type: application/json
-
-{
-  "nombre": "Juan Pérez",
-  "email": "juan@mail.com",
-  "contraseña": "password123"
-}
-
-### Crear con email repetido (debe dar 400)
-POST {{url}}/usuarios
-Content-Type: application/json
-
-{
-  "nombre": "Juan Pérez",
-  "email": "juan@mail.com",
-  "contraseña": "password123"
-}
-
-### Crear con contraseña débil (debe dar 400)
-POST {{url}}/usuarios
-Content-Type: application/json
-
-{
-  "nombre": "Ana",
-  "email": "ana@mail.com",
-  "contraseña": "abc"
-}
+@token=PEGAR_TOKEN_ACA
 
 ### Listar usuarios
+GET {{url}}/usuarios
+Authorization: Bearer {{token}}
+
+### Listar sin token (debe dar 401)
 GET {{url}}/usuarios
 
 ### Obtener usuario por ID
 GET {{url}}/usuarios/1
+Authorization: Bearer {{token}}
 
 ### Obtener usuario inexistente (debe dar 404)
 GET {{url}}/usuarios/9999
+Authorization: Bearer {{token}}
 
 ### Obtener con ID inválido (debe dar 400)
 GET {{url}}/usuarios/abc
+Authorization: Bearer {{token}}
 
-### Modificar usuario (la contraseña es opcional)
+### Modificar mi usuario (la contraseña es opcional)
 PUT {{url}}/usuarios/1
+Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
@@ -51,5 +30,16 @@ Content-Type: application/json
   "email": "juan@mail.com"
 }
 
-### Eliminar usuario
+### Modificar a otro usuario (debe dar 403)
+PUT {{url}}/usuarios/2
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "nombre": "Otro",
+  "email": "otro@mail.com"
+}
+
+### Eliminar mi usuario
 DELETE {{url}}/usuarios/1
+Authorization: Bearer {{token}}

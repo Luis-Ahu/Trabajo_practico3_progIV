@@ -1,0 +1,60 @@
+@url=http://localhost:3000
+
+### Registro
+POST {{url}}/auth/register
+Content-Type: application/json
+
+{
+  "nombre": "Juan Pérez",
+  "email": "juan@mail.com",
+  "contraseña": "password123"
+}
+
+### Registro con email repetido (debe dar 400)
+POST {{url}}/auth/register
+Content-Type: application/json
+
+{
+  "nombre": "Juan Pérez",
+  "email": "juan@mail.com",
+  "contraseña": "password123"
+}
+
+### Registro con contraseña débil (debe dar 400)
+POST {{url}}/auth/register
+Content-Type: application/json
+
+{
+  "nombre": "Ana",
+  "email": "ana@mail.com",
+  "contraseña": "abc"
+}
+
+### Login
+# @name login
+POST {{url}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "juan@mail.com",
+  "contraseña": "password123"
+}
+
+### Login con contraseña incorrecta (debe dar 401)
+POST {{url}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "juan@mail.com",
+  "contraseña": "incorrecta1"
+}
+
+###
+@token = {{login.response.body.token}}
+
+### Ruta protegida con token (debe dar 200)
+GET {{url}}/usuarios
+Authorization: Bearer {{token}}
+
+### Ruta protegida sin token (debe dar 401)
+GET {{url}}/usuarios

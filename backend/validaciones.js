@@ -25,6 +25,15 @@ export const validarRegistro = [
         .withMessage("Mínimo 8 caracteres, una minúscula y un número"),
 ];
 
+export const validarLogin = [
+    body("email")
+        .isEmail()
+        .withMessage("Email inválido"),
+    body("contraseña")
+        .notEmpty()
+        .withMessage("La contraseña es obligatoria"),
+];
+
 export const validarUsuarioEdicion = [
     body("nombre")
         .trim()
