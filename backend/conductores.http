@@ -1,5 +1,5 @@
 @url=http://localhost:3000
-@token=PEGAR_TOKEN_ACA
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc5NDc5MzAyNiwiZXhwIjoxNzk0ODA3NDI2fQ.oM-P9jNYtspsdLC_gGiB9tNYmU57d_M9boDDDy6rkZY
 ### Listar conductores
 GET {{url}}/conductores
 Authorization: Bearer {{token}}
@@ -95,4 +95,13 @@ Authorization: Bearer {{token}}
 
 ### Eliminar conductor inexistente (debe dar 404)
 DELETE {{url}}/conductores/9999
+Authorization: Bearer {{token}}
+
+
+### Historial de viajes
+GET {{url}}/conductores/1/viajes
+Authorization: Bearer {{token}}
+
+### Total de km
+GET {{url}}/conductores/1/kilometros
 Authorization: Bearer {{token}}

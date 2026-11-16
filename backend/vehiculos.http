@@ -1,5 +1,5 @@
 @url=http://localhost:3000
-@token=PEGAR_TOKEN_ACA
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc5NDc5MzAyNiwiZXhwIjoxNzk0ODA3NDI2fQ.oM-P9jNYtspsdLC_gGiB9tNYmU57d_M9boDDDy6rkZY
 
 ### Listar vehículos
 GET {{url}}/vehiculos
@@ -91,4 +91,13 @@ Authorization: Bearer {{token}}
 
 ### Eliminar vehículo inexistente (debe dar 404)
 DELETE {{url}}/vehiculos/9999
+Authorization: Bearer {{token}}
+
+
+### Historial de viajes
+GET {{url}}/vehiculos/1/viajes
+Authorization: Bearer {{token}}
+
+### Total de km
+GET {{url}}/vehiculos/1/kilometros
 Authorization: Bearer {{token}}

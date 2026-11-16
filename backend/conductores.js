@@ -81,12 +81,40 @@ router.delete("/:id", validarId, verificarValidaciones, async (req, res) => {
 
         res.send("Conductor eliminado correctamente");
     } catch (e) {
-        // El conductor tiene viajes asociados (clave foránea)
         if (e.code === "ER_ROW_IS_REFERENCED_2") {
             return res.status(400).send("No se puede eliminar: el conductor tiene viajes registrados");
         }
         throw e;
     }
+});
+
+
+// Historial de viajes del conductor
+router.get("/:id/viajes", validarId, verificarValidaciones, async (req, res) => {
+    const id = Number(req.params.id);
+
+    const [viajes] = await db.execute(
+        `SELECT v.*, ve.marca, ve.modelo, ve.patente
+         FROM viajes v
+         JOIN vehiculos ve ON v.vehiculo_id = ve.id
+         WHERE v.conductor_id = ?
+         ORDER BY v.fecha_salida DESC`,
+        [id]
+    );
+
+    res.send(viajes);
+});
+
+// Total de kilómetros del conductor
+router.get("/:id/kilometros", validarId, verificarValidaciones, async (req, res) => {
+    const id = Number(req.params.id);
+
+    const [resultado] = await db.execute(
+        "SELECT COALESCE(SUM(kilometros), 0) AS total_km FROM viajes WHERE conductor_id = ?",
+        [id]
+    );
+
+    res.send(resultado[0]);
 });
 
 export default router;

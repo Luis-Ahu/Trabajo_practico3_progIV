@@ -84,4 +84,34 @@ router.delete("/:id", validarId, verificarValidaciones, async (req, res) => {
     }
 });
 
+
+// Historial de viajes del vehículo
+router.get("/:id/viajes", validarId, verificarValidaciones, async (req, res) => {
+    const id = Number(req.params.id);
+
+    const [viajes] = await db.execute(
+        `SELECT v.*, c.nombre AS conductor_nombre, c.apellido AS conductor_apellido
+         FROM viajes v
+         JOIN conductores c ON v.conductor_id = c.id
+         WHERE v.vehiculo_id = ?
+         ORDER BY v.fecha_salida DESC`,
+        [id]
+    );
+
+    res.send(viajes);
+});
+
+
+// Total de kilómetros del vehículo
+router.get("/:id/kilometros", validarId, verificarValidaciones, async (req, res) => {
+    const id = Number(req.params.id);
+
+    const [resultado] = await db.execute(
+        "SELECT COALESCE(SUM(kilometros), 0) AS total_km FROM viajes WHERE vehiculo_id = ?",
+        [id]
+    );
+
+    res.send(resultado[0]);
+});
+
 export default router;
