@@ -5,6 +5,7 @@ import vehiculosRouter from "./vehiculos.js";
 import conductoresRouter from "./conductores.js";
 import viajesRouter from "./viajes.js";
 import authRouter, { authConfig, authMiddleware } from "./auth.js";
+import cors from "cors";
 
 
 conectarDB();
@@ -13,6 +14,8 @@ const app = express();
 const port = 3000;
 
 app.use(express.json());
+app.use(cors());
+
 
 authConfig();
 
