@@ -18,6 +18,9 @@ export function Layout() {
               <li className={pathname.startsWith("/vehiculos") ? "active" : ""}>
                 <Link to="/vehiculos">Vehículos</Link>
               </li>
+              <li className={pathname.startsWith("/conductores") ? "active" : ""}>
+                <Link to="/conductores">Conductores</Link>
+              </li>
               <button
                 onClick={() => {
                   logout();

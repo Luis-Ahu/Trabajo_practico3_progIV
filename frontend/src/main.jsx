@@ -9,6 +9,7 @@ import { Registro } from "./Registro";
 import { Vehiculos } from "./vehiculos";
 import { VehiculoCrear } from "./VehiculoCrear";
 import { VehiculoDetalles } from "./VehiculoDetalles";
+import { Conductores } from "./Conductores";
 import { AuthLayout } from "./AuthLayout";
 import { AuthProvider } from "./Auth";
 
@@ -26,6 +27,9 @@ createRoot(document.getElementById("root")).render(
             <Route index element={<Vehiculos />} />
             <Route path="crear" element={<VehiculoCrear />} />
             <Route path=":id" element={<VehiculoDetalles />} />
+            <Route path="conductores" element={<AuthLayout />}>
+            <Route index element={<Conductores />} />
+            </Route>
             </Route>
           </Route>
         </Routes>
