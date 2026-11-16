@@ -1,0 +1,45 @@
+import { Link, Outlet, useLocation, useNavigate } from "react-router";
+import { useAuth } from "./Auth";
+
+export function Layout() {
+  const { isAuthenticated, logout } = useAuth();
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
+
+  return (
+    <main>
+      <nav>
+        <ul>
+          <li className={pathname === "/" ? "active" : ""}>
+            <Link to="/">Inicio</Link>
+          </li>
+          {isAuthenticated ? (
+            <>
+              <li className={pathname.startsWith("/vehiculos") ? "active" : ""}>
+                <Link to="/vehiculos">Vehículos</Link>
+              </li>
+              <button
+                onClick={() => {
+                  logout();
+                  navigate("/");
+                }}
+              >
+                Salir
+              </button>
+            </>
+          ) : (
+            <>
+              <li className={pathname.startsWith("/login") ? "active" : ""}>
+                <Link to="/login">Ingresar</Link>
+              </li>
+              <li className={pathname.startsWith("/registro") ? "active" : ""}>
+                <Link to="/registro">Registrarse</Link>
+              </li>
+            </>
+          )}
+        </ul>
+      </nav>
+      <Outlet />
+    </main>
+  );
+}
