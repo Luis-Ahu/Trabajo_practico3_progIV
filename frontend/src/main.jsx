@@ -6,6 +6,7 @@ import { Layout } from "./Layout";
 import { Home } from "./Home";
 import { Login } from "./Login";
 import { Registro } from "./Registro";
+import { Vehiculos } from "./vehiculos";
 import { AuthLayout } from "./AuthLayout";
 import { AuthProvider } from "./Auth";
 
@@ -20,7 +21,7 @@ createRoot(document.getElementById("root")).render(
             <Route path="registro" element={<Registro />} />
 
             <Route path="vehiculos" element={<AuthLayout />}>
-              <Route index element={<h2>Vehículos</h2>} />
+            <Route index element={<Vehiculos />} />
             </Route>
           </Route>
         </Routes>
