@@ -21,3 +21,31 @@ export function validarVehiculo(v) {
 
   return e;
 }
+
+export function validarConductor(c) {
+  const e = {};
+
+  if (!c.nombre.trim()) e.nombre = "El nombre es obligatorio";
+  else if (c.nombre.length > 50) e.nombre = "Máximo 50 caracteres";
+
+  if (!c.apellido.trim()) e.apellido = "El apellido es obligatorio";
+  else if (c.apellido.length > 50) e.apellido = "Máximo 50 caracteres";
+
+  if (!/^\d{7,20}$/.test(c.documento.trim()))
+    e.documento = "El documento debe ser numérico (entre 7 y 20 dígitos)";
+
+  if (!c.licencia.trim()) e.licencia = "La licencia es obligatoria";
+  else if (c.licencia.length > 20) e.licencia = "Máximo 20 caracteres";
+
+  if (!c.fecha_alta_licencia) e.fecha_alta_licencia = "La fecha de alta es obligatoria";
+
+  if (!c.fecha_vencimiento_licencia)
+    e.fecha_vencimiento_licencia = "La fecha de vencimiento es obligatoria";
+  else if (
+    c.fecha_alta_licencia &&
+    new Date(c.fecha_vencimiento_licencia) <= new Date(c.fecha_alta_licencia)
+  )
+    e.fecha_vencimiento_licencia = "El vencimiento debe ser posterior al alta";
+
+  return e;
+}
