@@ -40,4 +40,48 @@ router.post("/", validarVehiculos, verificarValidaciones, async (req, res) => {
     }
 });
 
+
+router.put("/:id", validarId, validarVehiculos, verificarValidaciones, async (req, res) => {
+    const id = Number(req.params.id);
+    const { marca, modelo, patente, año, capacidad_carga_kg } = req.body;
+
+    try {
+        const [result] = await db.execute(
+            "UPDATE vehiculos SET marca=?, modelo=?, patente=?, `año`=?, capacidad_carga_kg=? WHERE id=?",
+            [marca, modelo, patente, año, capacidad_carga_kg, id]
+        );
+
+        if (result.affectedRows === 0) {
+            return res.status(404).send("Vehículo no encontrado");
+        }
+
+        res.send({ id, marca, modelo, patente, año, capacidad_carga_kg });
+    } catch (e) {
+        if (e.code === "ER_DUP_ENTRY") {
+            return res.status(400).send("Ya existe un vehículo con esa patente");
+        }
+        throw e;
+    }
+});
+
+
+router.delete("/:id", validarId, verificarValidaciones, async (req, res) => {
+    const id = Number(req.params.id);
+
+    try {
+        const [result] = await db.execute("DELETE FROM vehiculos WHERE id=?", [id]);
+
+        if (result.affectedRows === 0) {
+            return res.status(404).send("Vehículo no encontrado");
+        }
+
+        res.send("Vehículo eliminado correctamente");
+    } catch (e) {
+        if (e.code === "ER_ROW_IS_REFERENCED_2") {
+            return res.status(400).send("No se puede eliminar: el vehículo tiene viajes registrados");
+        }
+        throw e;
+    }
+});
+
 export default router;

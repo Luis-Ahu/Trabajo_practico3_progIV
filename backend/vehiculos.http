@@ -1,5 +1,5 @@
 @url=http://localhost:3000
-@token=PEGAR_TOKEN_ACA
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc5NDc4ODY4NiwiZXhwIjoxNzk0ODAzMDg2fQ.D5rWa3-76s6AUj6IEz4IpbJPgaau2OfhuirtMLEeqWM
 
 ### Listar vehículos
 GET {{url}}/vehiculos
@@ -58,3 +58,37 @@ Content-Type: application/json
   "año": 2020,
   "capacidad_carga_kg": 18000
 }
+
+### Modificar vehículo
+PUT {{url}}/vehiculos/1
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "marca": "Mercedes",
+  "modelo": "Actros 2651",
+  "patente": "AB123CD",
+  "año": 2021,
+  "capacidad_carga_kg": 20000
+}
+
+### Modificar vehículo inexistente (debe dar 404)
+PUT {{url}}/vehiculos/9999
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "marca": "Mercedes",
+  "modelo": "Actros",
+  "patente": "ZZ999ZZ",
+  "año": 2021,
+  "capacidad_carga_kg": 20000
+}
+
+### Eliminar vehículo
+DELETE {{url}}/vehiculos/1
+Authorization: Bearer {{token}}
+
+### Eliminar vehículo inexistente (debe dar 404)
+DELETE {{url}}/vehiculos/9999
+Authorization: Bearer {{token}}
