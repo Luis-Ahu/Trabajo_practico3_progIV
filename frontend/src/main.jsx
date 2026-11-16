@@ -6,7 +6,7 @@ import { Layout } from "./Layout";
 import { Home } from "./Home";
 import { Login } from "./Login";
 import { Registro } from "./Registro";
-import { Vehiculos } from "./vehiculos";
+import { Vehiculos } from "./Vehiculos";
 import { VehiculoCrear } from "./VehiculoCrear";
 import { VehiculoDetalles } from "./VehiculoDetalles";
 import { Conductores } from "./Conductores";
@@ -26,14 +26,15 @@ createRoot(document.getElementById("root")).render(
             <Route path="registro" element={<Registro />} />
 
             <Route path="vehiculos" element={<AuthLayout />}>
-            <Route index element={<Vehiculos />} />
-            <Route path="crear" element={<VehiculoCrear />} />
-            <Route path=":id" element={<VehiculoDetalles />} />
-            <Route path="conductores" element={<AuthLayout />}>
-            <Route index element={<Conductores />} />
-            <Route path="crear" element={<ConductorCrear />} />
-            <Route path=":id" element={<ConductorDetalles />} />
+              <Route index element={<Vehiculos />} />
+              <Route path="crear" element={<VehiculoCrear />} />
+              <Route path=":id" element={<VehiculoDetalles />} />
             </Route>
+
+            <Route path="conductores" element={<AuthLayout />}>
+              <Route index element={<Conductores />} />
+              <Route path="crear" element={<ConductorCrear />} />
+              <Route path=":id" element={<ConductorDetalles />} />
             </Route>
           </Route>
         </Routes>
