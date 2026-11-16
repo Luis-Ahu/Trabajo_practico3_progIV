@@ -1,5 +1,5 @@
 @url=http://localhost:3000
-@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc5NDc4ODY4NiwiZXhwIjoxNzk0ODAzMDg2fQ.D5rWa3-76s6AUj6IEz4IpbJPgaau2OfhuirtMLEeqWM
+@token=PEGAR_TOKEN_ACA
 
 ### Listar vehículos
 GET {{url}}/vehiculos
