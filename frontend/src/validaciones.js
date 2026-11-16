@@ -49,3 +49,33 @@ export function validarConductor(c) {
 
   return e;
 }
+
+export function validarViaje(v) {
+  const e = {};
+
+  if (!v.vehiculo_id || Number(v.vehiculo_id) === 0)
+    e.vehiculo_id = "Seleccioná un vehículo";
+
+  if (!v.conductor_id || Number(v.conductor_id) === 0)
+    e.conductor_id = "Seleccioná un conductor";
+
+  if (!v.fecha_salida) e.fecha_salida = "La fecha de salida es obligatoria";
+
+  if (!v.fecha_llegada) e.fecha_llegada = "La fecha de llegada es obligatoria";
+  else if (v.fecha_salida && new Date(v.fecha_llegada) < new Date(v.fecha_salida))
+    e.fecha_llegada = "La llegada no puede ser anterior a la salida";
+
+  if (!v.origen.trim()) e.origen = "El origen es obligatorio";
+  else if (v.origen.length > 100) e.origen = "Máximo 100 caracteres";
+
+  if (!v.destino.trim()) e.destino = "El destino es obligatorio";
+  else if (v.destino.length > 100) e.destino = "Máximo 100 caracteres";
+
+  if (v.kilometros === "" || Number(v.kilometros) <= 0)
+    e.kilometros = "Los kilómetros deben ser mayores a 0";
+
+  if (v.observaciones && v.observaciones.length > 255)
+    e.observaciones = "Máximo 255 caracteres";
+
+  return e;
+}
