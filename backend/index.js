@@ -28,6 +28,15 @@ app.use("/conductores", authMiddleware, conductoresRouter);
 app.use("/viajes", authMiddleware, viajesRouter);
 
 
+app.use((req, res) => {
+    res.status(404).send("Ruta no encontrada");
+});
+
+app.use((err, req, res, next) => {
+    console.error(err);
+    res.status(500).send("Error interno del servidor");
+});
+
 app.listen(port, () => {
   console.log(`La aplicación esta funcionando en ${port}`);
 });
