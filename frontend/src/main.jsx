@@ -12,6 +12,7 @@ import { VehiculoDetalles } from "./VehiculoDetalles";
 import { Conductores } from "./Conductores";
 import { ConductorCrear } from "./ConductorCrear";
 import { ConductorDetalles } from "./ConductorDetalles";
+import { Viajes } from "./Viajes";
 import { AuthLayout } from "./AuthLayout";
 import { AuthProvider } from "./Auth";
 
@@ -35,6 +36,10 @@ createRoot(document.getElementById("root")).render(
               <Route index element={<Conductores />} />
               <Route path="crear" element={<ConductorCrear />} />
               <Route path=":id" element={<ConductorDetalles />} />
+            </Route>
+
+            <Route path="viajes" element={<AuthLayout />}>
+              <Route index element={<Viajes />} />
             </Route>
           </Route>
         </Routes>
