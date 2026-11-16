@@ -1,4 +1,4 @@
-import { body, param, validationResult } from "express-validator";
+import { body, param, validationResult, query } from "express-validator";
 
 export const validarId = param("id")
     .isInt({ min: 1 })
@@ -107,6 +107,51 @@ export const validarConductores = [
         .withMessage("La fecha de vencimiento debe tener formato AAAA-MM-DD")
         .custom((valor, { req }) => new Date(valor) > new Date(req.body.fecha_alta_licencia))
         .withMessage("El vencimiento debe ser posterior al alta"),
+];
+
+// ---------- Viajes ----------
+
+export const validarViajes = [
+    body("vehiculo_id")
+        .isInt({ min: 1 })
+        .withMessage("vehiculo_id debe ser un número positivo"),
+    body("conductor_id")
+        .isInt({ min: 1 })
+        .withMessage("conductor_id debe ser un número positivo"),
+    body("fecha_salida")
+        .isISO8601()
+        .withMessage("La fecha de salida debe tener formato AAAA-MM-DDTHH:MM"),
+    body("fecha_llegada")
+        .isISO8601()
+        .withMessage("La fecha de llegada debe tener formato AAAA-MM-DDTHH:MM")
+        .custom((valor, { req }) => new Date(valor) >= new Date(req.body.fecha_salida))
+        .withMessage("La llegada no puede ser anterior a la salida"),
+    body("origen")
+        .trim()
+        .notEmpty()
+        .withMessage("El origen es obligatorio"),
+    body("destino")
+        .trim()
+        .notEmpty()
+        .withMessage("El destino es obligatorio"),
+    body("kilometros")
+        .isFloat({ min: 0.1 })
+        .withMessage("Los kilómetros deben ser un número mayor a 0"),
+    body("observaciones")
+        .optional({ values: "falsy" })
+        .isLength({ max: 255 })
+        .withMessage("Las observaciones admiten hasta 255 caracteres"),
+];
+
+export const validarFiltrosViajes = [
+    query("vehiculo_id")
+        .optional()
+        .isInt({ min: 1 })
+        .withMessage("vehiculo_id debe ser un número positivo"),
+    query("conductor_id")
+        .optional()
+        .isInt({ min: 1 })
+        .withMessage("conductor_id debe ser un número positivo"),
 ];
 
 

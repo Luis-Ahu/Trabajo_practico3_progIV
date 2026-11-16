@@ -1,0 +1,124 @@
+@url=http://localhost:3000
+@token=PEGAR_TOKEN_ACA
+
+### Listar todos los viajes
+GET {{url}}/viajes
+Authorization: Bearer {{token}}
+
+### Filtrar por vehículo
+GET {{url}}/viajes?vehiculo_id=1
+Authorization: Bearer {{token}}
+
+### Filtrar por conductor
+GET {{url}}/viajes?conductor_id=1
+Authorization: Bearer {{token}}
+
+### Filtrar por vehículo y conductor
+GET {{url}}/viajes?vehiculo_id=1&conductor_id=1
+Authorization: Bearer {{token}}
+
+### Filtro inválido (debe dar 400)
+GET {{url}}/viajes?vehiculo_id=abc
+Authorization: Bearer {{token}}
+
+### Total de km (sin filtro)
+GET {{url}}/viajes/kilometros
+Authorization: Bearer {{token}}
+
+### Total de km por vehículo
+GET {{url}}/viajes/kilometros?vehiculo_id=1
+Authorization: Bearer {{token}}
+
+### Obtener viaje por ID
+GET {{url}}/viajes/1
+Authorization: Bearer {{token}}
+
+### Viaje inexistente (debe dar 404)
+GET {{url}}/viajes/9999
+Authorization: Bearer {{token}}
+
+### Registrar viaje
+POST {{url}}/viajes
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "vehiculo_id": 1,
+  "conductor_id": 1,
+  "fecha_salida": "2026-11-10T08:00",
+  "fecha_llegada": "2026-11-10T18:30",
+  "origen": "La Rioja",
+  "destino": "Córdoba",
+  "kilometros": 450,
+  "observaciones": "Sin novedades"
+}
+
+### Llegada anterior a salida (debe dar 400)
+POST {{url}}/viajes
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "vehiculo_id": 1,
+  "conductor_id": 1,
+  "fecha_salida": "2026-11-10T18:00",
+  "fecha_llegada": "2026-11-10T08:00",
+  "origen": "La Rioja",
+  "destino": "Córdoba",
+  "kilometros": 450
+}
+
+### Vehículo inexistente (debe dar 400)
+POST {{url}}/viajes
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "vehiculo_id": 9999,
+  "conductor_id": 1,
+  "fecha_salida": "2026-11-10T08:00",
+  "fecha_llegada": "2026-11-10T18:30",
+  "origen": "La Rioja",
+  "destino": "Córdoba",
+  "kilometros": 450
+}
+
+
+### Modificar viaje
+PUT {{url}}/viajes/1
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "vehiculo_id": 1,
+  "conductor_id": 1,
+  "fecha_salida": "2026-11-10T08:00",
+  "fecha_llegada": "2026-11-10T19:00",
+  "origen": "La Rioja",
+  "destino": "Córdoba",
+  "kilometros": 455,
+  "observaciones": "Demora en ruta"
+}
+
+### Modificar viaje inexistente (debe dar 404)
+PUT {{url}}/viajes/9999
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "vehiculo_id": 1,
+  "conductor_id": 1,
+  "fecha_salida": "2026-11-10T08:00",
+  "fecha_llegada": "2026-11-10T19:00",
+  "origen": "La Rioja",
+  "destino": "Córdoba",
+  "kilometros": 455
+}
+
+### Eliminar viaje
+DELETE {{url}}/viajes/1
+Authorization: Bearer {{token}}
+
+### Eliminar viaje inexistente (debe dar 404)
+DELETE {{url}}/viajes/9999
+Authorization: Bearer {{token}}
