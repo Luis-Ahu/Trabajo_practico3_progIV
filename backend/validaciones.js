@@ -79,6 +79,37 @@ export const validarVehiculos = [
 ];
 
 
+// ---------- Conductores ----------
+
+export const validarConductores = [
+    body("nombre")
+        .trim()
+        .isLength({ min: 1, max: 50 })
+        .withMessage("El nombre es obligatorio (máx. 50 caracteres)"),
+    body("apellido")
+        .trim()
+        .isLength({ min: 1, max: 50 })
+        .withMessage("El apellido es obligatorio (máx. 50 caracteres)"),
+    body("documento")
+        .trim()
+        .isNumeric()
+        .isLength({ min: 7, max: 20 })
+        .withMessage("El documento debe ser numérico (entre 7 y 20 dígitos)"),
+    body("licencia")
+        .trim()
+        .isLength({ min: 1, max: 20 })
+        .withMessage("La licencia es obligatoria (máx. 20 caracteres)"),
+    body("fecha_alta_licencia")
+        .isISO8601()
+        .withMessage("La fecha de alta debe tener formato AAAA-MM-DD"),
+    body("fecha_vencimiento_licencia")
+        .isISO8601()
+        .withMessage("La fecha de vencimiento debe tener formato AAAA-MM-DD")
+        .custom((valor, { req }) => new Date(valor) > new Date(req.body.fecha_alta_licencia))
+        .withMessage("El vencimiento debe ser posterior al alta"),
+];
+
+
 // ---------- Middleware ----------
 export const verificarValidaciones = (req, res, next) => {
     const resultado = validationResult(req);

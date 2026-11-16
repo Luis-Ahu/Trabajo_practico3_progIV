@@ -1,0 +1,98 @@
+@url=http://localhost:3000
+@token=PEGAR_TOKEN_ACA
+### Listar conductores
+GET {{url}}/conductores
+Authorization: Bearer {{token}}
+
+### Listar sin token (debe dar 401)
+GET {{url}}/conductores
+
+### Obtener conductor por ID
+GET {{url}}/conductores/1
+Authorization: Bearer {{token}}
+
+### Obtener conductor inexistente (debe dar 404)
+GET {{url}}/conductores/9999
+Authorization: Bearer {{token}}
+
+### Obtener con ID inválido (debe dar 400)
+GET {{url}}/conductores/abc
+Authorization: Bearer {{token}}
+
+### Crear conductor
+POST {{url}}/conductores
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "nombre": "Carlos",
+  "apellido": "Gómez",
+  "documento": "30123456",
+  "licencia": "LIC-0001",
+  "fecha_alta_licencia": "2020-03-15",
+  "fecha_vencimiento_licencia": "2027-03-15"
+}
+
+### Crear con vencimiento anterior al alta (debe dar 400)
+POST {{url}}/conductores
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "nombre": "Ana",
+  "apellido": "López",
+  "documento": "31123456",
+  "licencia": "LIC-0002",
+  "fecha_alta_licencia": "2025-03-15",
+  "fecha_vencimiento_licencia": "2020-03-15"
+}
+
+### Crear con documento repetido (debe dar 400)
+POST {{url}}/conductores
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "nombre": "Carlos",
+  "apellido": "Gómez",
+  "documento": "30123456",
+  "licencia": "LIC-0003",
+  "fecha_alta_licencia": "2020-03-15",
+  "fecha_vencimiento_licencia": "2027-03-15"
+}
+
+### Modificar conductor
+PUT {{url}}/conductores/1
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "nombre": "Carlos",
+  "apellido": "Gómez",
+  "documento": "30123456",
+  "licencia": "LIC-0001",
+  "fecha_alta_licencia": "2020-03-15",
+  "fecha_vencimiento_licencia": "2028-03-15"
+}
+
+### Modificar conductor inexistente (debe dar 404)
+PUT {{url}}/conductores/9999
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "nombre": "Carlos",
+  "apellido": "Gómez",
+  "documento": "39999999",
+  "licencia": "LIC-9999",
+  "fecha_alta_licencia": "2020-03-15",
+  "fecha_vencimiento_licencia": "2028-03-15"
+}
+
+### Eliminar conductor
+DELETE {{url}}/conductores/1
+Authorization: Bearer {{token}}
+
+### Eliminar conductor inexistente (debe dar 404)
+DELETE {{url}}/conductores/9999
+Authorization: Bearer {{token}}

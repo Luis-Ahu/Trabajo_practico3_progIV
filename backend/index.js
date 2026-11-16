@@ -1,7 +1,8 @@
 import express from "express";
 import { conectarDB } from "./db.js";
 import usuariosRouter from "./usuarios.js";
-import vehiculosRouter from "./vehiculos.js"
+import vehiculosRouter from "./vehiculos.js";
+import conductoresRouter from "./conductores.js";
 import authRouter, { authConfig, authMiddleware } from "./auth.js";
 
 
@@ -22,6 +23,7 @@ app.get("/", (req, res) => {
 app.use("/auth", authRouter);
 app.use("/usuarios", authMiddleware, usuariosRouter);
 app.use("/vehiculos", authMiddleware, vehiculosRouter);
+app.use("/conductores", authMiddleware, conductoresRouter);
 
 
 app.listen(port, () => {
