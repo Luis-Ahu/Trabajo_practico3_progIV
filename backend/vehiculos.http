@@ -1,0 +1,60 @@
+@url=http://localhost:3000
+@token=PEGAR_TOKEN_ACA
+
+### Listar vehículos
+GET {{url}}/vehiculos
+Authorization: Bearer {{token}}
+
+### Listar sin token (debe dar 401)
+GET {{url}}/vehiculos
+
+### Obtener vehículo por ID
+GET {{url}}/vehiculos/1
+Authorization: Bearer {{token}}
+
+### Obtener vehículo inexistente (debe dar 404)
+GET {{url}}/vehiculos/9999
+Authorization: Bearer {{token}}
+
+### Obtener con ID inválido (debe dar 400)
+GET {{url}}/vehiculos/abc
+Authorization: Bearer {{token}}
+
+### Crear vehículo
+POST {{url}}/vehiculos
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "marca": "Mercedes",
+  "modelo": "Actros",
+  "patente": "AB123CD",
+  "año": 2020,
+  "capacidad_carga_kg": 18000
+}
+
+### Crear con datos inválidos (debe dar 400)
+POST {{url}}/vehiculos
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "marca": "",
+  "modelo": "Actros",
+  "patente": "AB",
+  "año": 1800,
+  "capacidad_carga_kg": -5
+}
+
+### Crear con patente repetida (debe dar 400)
+POST {{url}}/vehiculos
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "marca": "Mercedes",
+  "modelo": "Actros",
+  "patente": "AB123CD",
+  "año": 2020,
+  "capacidad_carga_kg": 18000
+}
